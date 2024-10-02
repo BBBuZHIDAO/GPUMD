@@ -144,6 +144,8 @@ static __global__ void find_descriptors_radial_and_angular(
     float q_radial[MAX_NUM_N] = {0.0f};
 
     float s[NUM_OF_ABC] = {0.0f};
+    int num_types_sq = paramb.num_types_sq;
+    // find q for angular and radial in rc of angular
     for (int i1 = 0; i1 < neighbor_number_angular; ++i1) {
       int index = n1 + N * i1;
       int n2 = g_NL_angular[n1 + N * i1];
@@ -167,36 +169,44 @@ static __global__ void find_descriptors_radial_and_angular(
             paramb.typewise_cutoff_radial_factor,
           rc_radial);
       }
+
+      // calculate for angular
       float rcinv_angular = 1.0f / rc_angular;
       find_fc(rc_angular, rcinv_angular, d12, fc12);
       float fn12[MAX_NUM_N];
       find_fn(paramb.basis_size_angular, rcinv_angular, d12, fc12, fn12);
+      int c_index = t1 * paramb.num_types + t2 + paramb.num_c_radial;
       for (int n = 0; n <= paramb.n_max_angular; ++n) {
         float gn12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_angular; ++k) {
-          int c_index = (n * (paramb.basis_size_angular + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2 + paramb.num_c_radial;
+          // int c_index = (n * (paramb.basis_size_angular + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2 + paramb.num_c_radial;
           gn12 += fn12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         accumulate_s(d12, x12, y12, z12, gn12, s);
       }
 
-      // radial
+      // calculate for radial
       float rcinv_radial = 1.0f / rc_radial;
       find_fc(rc_radial, rcinv_radial, d12, fc12);
 
       // float fn12[MAX_NUM_N];
       find_fn(paramb.basis_size_radial, rcinv_radial, d12, fc12, fn12);
+      c_index = t1 * paramb.num_types + t2;
       for (int n = 0; n <= paramb.n_max_radial; ++n) {
         float gn12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_radial; ++k) {
-          int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2;
+          // int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2;
           gn12 += fn12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         q_radial[n] += gn12;
       }
     }
+
+    // calculate fxyz and q for angular
     for (int n = 0; n <= paramb.n_max_angular; ++n) {
       if (paramb.num_L == paramb.L_max) {
         find_q(paramb.n_max_angular + 1, n, s, q_angular);
@@ -210,12 +220,15 @@ static __global__ void find_descriptors_radial_and_angular(
       }
     }
 
+    // save angular descriptors
     for (int n = 0; n <= paramb.n_max_angular; ++n) {
       for (int l = 0; l < paramb.num_L; ++l) {
         int ln = l * (paramb.n_max_angular + 1) + n;
         g_descriptors[n1 + ((paramb.n_max_radial + 1) + ln) * N] = q_angular[ln];
       }
     }
+
+    // find q for radial in rc between angular and radial
     for (int i1 = 0; i1 < neighbor_number_radial; ++i1) {
       int index = n1 + N * i1;
       int n2 = g_NL_radial[index];
@@ -238,16 +251,20 @@ static __global__ void find_descriptors_radial_and_angular(
 
       float fn12[MAX_NUM_N];
       find_fn(paramb.basis_size_radial, rcinv_radial, d12, fc12, fn12);
+      int c_index = t1 * paramb.num_types + t2;
       for (int n = 0; n <= paramb.n_max_radial; ++n) {
         float gn12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_radial; ++k) {
-          int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2;
+          // int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2;
           gn12 += fn12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         q_radial[n] += gn12;
       }
     }
+
+    // save radial descriptors
     for (int n = 0; n <= paramb.n_max_radial; ++n) {
       g_descriptors[n1 + n * N] = q_radial[n];
     }
@@ -756,6 +773,7 @@ static __global__ void find_force_radial_and_angular(
 
     float Fp[MAX_DIM_ANGULAR] = {0.0f};
     float sum_fxyz[NUM_OF_ABC * MAX_NUM_N];
+    int num_types_sq = paramb.num_types_sq;
     for (int d = 0; d < paramb.dim_angular; ++d) {
       Fp[d] = g_Fp[(paramb.n_max_radial + 1 + d) * N + n1];
     }
@@ -764,6 +782,7 @@ static __global__ void find_force_radial_and_angular(
     }
     int neighbor_number_angular = g_NN_angular[n1];
     int t1 = g_type[n1];
+    // find force for angular and radial in rc of angular
     for (int i1 = 0; i1 < neighbor_number_angular; ++i1) {
       int index = i1 * N + n1;
       int n2_angular = g_NL_angular[index];
@@ -786,6 +805,7 @@ static __global__ void find_force_radial_and_angular(
             paramb.typewise_cutoff_radial_factor,
           rc_radial);
       }
+      // angular
       float rcinv_angular = 1.0f / rc_angular;
       find_fc_and_fcp(rc_angular, rcinv_angular, d12, fc12, fcp12);
       float f12[3] = {0.0f};
@@ -793,14 +813,16 @@ static __global__ void find_force_radial_and_angular(
       float fn12[MAX_NUM_N];
       float fnp12[MAX_NUM_N];
       find_fn_and_fnp(paramb.basis_size_angular, rcinv_angular, d12, fc12, fcp12, fn12, fnp12);
+      int c_index = t1 * paramb.num_types + t2 + paramb.num_c_radial;
       for (int n = 0; n <= paramb.n_max_angular; ++n) {
         float gn12 = 0.0f;
         float gnp12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_angular; ++k) {
-          int c_index = (n * (paramb.basis_size_angular + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2 + paramb.num_c_radial;
+          // int c_index = (n * (paramb.basis_size_angular + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2 + paramb.num_c_radial;
           gn12 += fn12[k] * annmb.c[c_index];
           gnp12 += fnp12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         if (paramb.num_L == paramb.L_max) {
           accumulate_f12(n, paramb.n_max_angular + 1, d12, r12, gn12, gnp12, Fp, sum_fxyz, f12);
@@ -821,17 +843,19 @@ static __global__ void find_force_radial_and_angular(
       // float f12[3] = {0.0f};
 
       find_fn_and_fnp(paramb.basis_size_radial, rcinv_radial, d12, fc12, fcp12, fn12, fnp12);
+      c_index = t1 * paramb.num_types + t2;
       for (int n = 0; n <= paramb.n_max_radial; ++n) {
         float gnp12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_radial; ++k) {
-          int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2;
+          // int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2;
           gnp12 += fnp12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         float tmp12 = g_Fp[n1 + n * N] * gnp12 * d12inv;
-        for (int d = 0; d < 3; ++d) {
-          f12[d] += tmp12 * r12[d];
-        }
+        f12[0] += tmp12 * r12[0];
+        f12[1] += tmp12 * r12[1];
+        f12[2] += tmp12 * r12[2];
       }
 
       atomicAdd(&g_fx[n1], f12[0]);
@@ -856,7 +880,7 @@ static __global__ void find_force_radial_and_angular(
       s_virial_zx -= r12[2] * f12[0];
     }
     
-    // just radial
+    // find force for radial in rc between angular and radial
     int neighbor_number_radial = g_NN_radial[n1];
     for (int i1 = 0; i1 < neighbor_number_radial; ++i1) {
       int index = i1 * N + n1;
@@ -881,17 +905,19 @@ static __global__ void find_force_radial_and_angular(
       float f12[3] = {0.0f};
 
       find_fn_and_fnp(paramb.basis_size_radial, rcinv, d12, fc12, fcp12, fn12, fnp12);
+      int c_index = t1 * paramb.num_types + t2;
       for (int n = 0; n <= paramb.n_max_radial; ++n) {
         float gnp12 = 0.0f;
         for (int k = 0; k <= paramb.basis_size_radial; ++k) {
-          int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
-          c_index += t1 * paramb.num_types + t2;
+          // int c_index = (n * (paramb.basis_size_radial + 1) + k) * paramb.num_types_sq;
+          // c_index += t1 * paramb.num_types + t2;
           gnp12 += fnp12[k] * annmb.c[c_index];
+          c_index += num_types_sq;
         }
         float tmp12 = g_Fp[n1 + n * N] * gnp12 * d12inv;
-        for (int d = 0; d < 3; ++d) {
-          f12[d] += tmp12 * r12[d];
-        }
+        f12[0] += tmp12 * r12[0];
+        f12[1] += tmp12 * r12[1];
+        f12[2] += tmp12 * r12[2];
       }
 
       atomicAdd(&g_fx[n1], f12[0]);
