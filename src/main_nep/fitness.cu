@@ -157,7 +157,7 @@ void Fitness::compute(
     for (int n = 0; n < population_iter; ++n) {
       const float* individual = population + deviceCount * n * para.number_of_variables;
       potential->find_force(
-        para, individual, train_set[batch_id], false, calculate_neighbor, deviceCount);
+        para, individual, train_set[batch_id], false, true, deviceCount);
       for (int m = 0; m < deviceCount; ++m) {
         float energy_shift_per_structure_not_used;
         auto rmse_energy_array = train_set[batch_id][m].get_rmse_energy(
