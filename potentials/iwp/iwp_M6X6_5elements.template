@@ -1,0 +1,27 @@
+nep_iwp 5 Mo W S Se Te
+0
+<z0_Mo_Mo> <alpha_Mo_Mo> <delta_Mo_Mo> <epsilon_Mo_Mo> <C_Mo_Mo> <d_Mo_Mo> <sR_Mo_Mo> <reff_Mo_Mo> <C6_Mo_Mo> <S_Mo_Mo> <rcut_normal_Mo_Mo> <rcut_global_Mo_Mo>
+<z0_Mo_W> <alpha_Mo_W> <delta_Mo_W> <epsilon_Mo_W> <C_Mo_W> <d_Mo_W> <sR_Mo_W> <reff_Mo_W> <C6_Mo_W> <S_Mo_W> <rcut_normal_Mo_W> <rcut_global_Mo_W>
+<z0_Mo_S> <alpha_Mo_S> <delta_Mo_S> <epsilon_Mo_S> <C_Mo_S> <d_Mo_S> <sR_Mo_S> <reff_Mo_S> <C6_Mo_S> <S_Mo_S> <rcut_normal_Mo_S> <rcut_global_Mo_S>
+<z0_Mo_Se> <alpha_Mo_Se> <delta_Mo_Se> <epsilon_Mo_Se> <C_Mo_Se> <d_Mo_Se> <sR_Mo_Se> <reff_Mo_Se> <C6_Mo_Se> <S_Mo_Se> <rcut_normal_Mo_Se> <rcut_global_Mo_Se>
+<z0_Mo_Te> <alpha_Mo_Te> <delta_Mo_Te> <epsilon_Mo_Te> <C_Mo_Te> <d_Mo_Te> <sR_Mo_Te> <reff_Mo_Te> <C6_Mo_Te> <S_Mo_Te> <rcut_normal_Mo_Te> <rcut_global_Mo_Te>
+<z0_W_Mo> <alpha_W_Mo> <delta_W_Mo> <epsilon_W_Mo> <C_W_Mo> <d_W_Mo> <sR_W_Mo> <reff_W_Mo> <C6_W_Mo> <S_W_Mo> <rcut_normal_W_Mo> <rcut_global_W_Mo>
+<z0_W_W> <alpha_W_W> <delta_W_W> <epsilon_W_W> <C_W_W> <d_W_W> <sR_W_W> <reff_W_W> <C6_W_W> <S_W_W> <rcut_normal_W_W> <rcut_global_W_W>
+<z0_W_S> <alpha_W_S> <delta_W_S> <epsilon_W_S> <C_W_S> <d_W_S> <sR_W_S> <reff_W_S> <C6_W_S> <S_W_S> <rcut_normal_W_S> <rcut_global_W_S>
+<z0_W_Se> <alpha_W_Se> <delta_W_Se> <epsilon_W_Se> <C_W_Se> <d_W_Se> <sR_W_Se> <reff_W_Se> <C6_W_Se> <S_W_Se> <rcut_normal_W_Se> <rcut_global_W_Se>
+<z0_W_Te> <alpha_W_Te> <delta_W_Te> <epsilon_W_Te> <C_W_Te> <d_W_Te> <sR_W_Te> <reff_W_Te> <C6_W_Te> <S_W_Te> <rcut_normal_W_Te> <rcut_global_W_Te>
+<z0_S_Mo> <alpha_S_Mo> <delta_S_Mo> <epsilon_S_Mo> <C_S_Mo> <d_S_Mo> <sR_S_Mo> <reff_S_Mo> <C6_S_Mo> <S_S_Mo> <rcut_normal_S_Mo> <rcut_global_S_Mo>
+<z0_S_W> <alpha_S_W> <delta_S_W> <epsilon_S_W> <C_S_W> <d_S_W> <sR_S_W> <reff_S_W> <C6_S_W> <S_S_W> <rcut_normal_S_W> <rcut_global_S_W>
+<z0_S_S> <alpha_S_S> <delta_S_S> <epsilon_S_S> <C_S_S> <d_S_S> <sR_S_S> <reff_S_S> <C6_S_S> <S_S_S> <rcut_normal_S_S> <rcut_global_S_S>
+<z0_S_Se> <alpha_S_Se> <delta_S_Se> <epsilon_S_Se> <C_S_Se> <d_S_Se> <sR_S_Se> <reff_S_Se> <C6_S_Se> <S_S_Se> <rcut_normal_S_Se> <rcut_global_S_Se>
+<z0_S_Te> <alpha_S_Te> <delta_S_Te> <epsilon_S_Te> <C_S_Te> <d_S_Te> <sR_S_Te> <reff_S_Te> <C6_S_Te> <S_S_Te> <rcut_normal_S_Te> <rcut_global_S_Te>
+<z0_Se_Mo> <alpha_Se_Mo> <delta_Se_Mo> <epsilon_Se_Mo> <C_Se_Mo> <d_Se_Mo> <sR_Se_Mo> <reff_Se_Mo> <C6_Se_Mo> <S_Se_Mo> <rcut_normal_Se_Mo> <rcut_global_Se_Mo>
+<z0_Se_W> <alpha_Se_W> <delta_Se_W> <epsilon_Se_W> <C_Se_W> <d_Se_W> <sR_Se_W> <reff_Se_W> <C6_Se_W> <S_Se_W> <rcut_normal_Se_W> <rcut_global_Se_W>
+<z0_Se_S> <alpha_Se_S> <delta_Se_S> <epsilon_Se_S> <C_Se_S> <d_Se_S> <sR_Se_S> <reff_Se_S> <C6_Se_S> <S_Se_S> <rcut_normal_Se_S> <rcut_global_Se_S>
+<z0_Se_Se> <alpha_Se_Se> <delta_Se_Se> <epsilon_Se_Se> <C_Se_Se> <d_Se_Se> <sR_Se_Se> <reff_Se_Se> <C6_Se_Se> <S_Se_Se> <rcut_normal_Se_Se> <rcut_global_Se_Se>
+<z0_Se_Te> <alpha_Se_Te> <delta_Se_Te> <epsilon_Se_Te> <C_Se_Te> <d_Se_Te> <sR_Se_Te> <reff_Se_Te> <C6_Se_Te> <S_Se_Te> <rcut_normal_Se_Te> <rcut_global_Se_Te>
+<z0_Te_Mo> <alpha_Te_Mo> <delta_Te_Mo> <epsilon_Te_Mo> <C_Te_Mo> <d_Te_Mo> <sR_Te_Mo> <reff_Te_Mo> <C6_Te_Mo> <S_Te_Mo> <rcut_normal_Te_Mo> <rcut_global_Te_Mo>
+<z0_Te_W> <alpha_Te_W> <delta_Te_W> <epsilon_Te_W> <C_Te_W> <d_Te_W> <sR_Te_W> <reff_Te_W> <C6_Te_W> <S_Te_W> <rcut_normal_Te_W> <rcut_global_Te_W>
+<z0_Te_S> <alpha_Te_S> <delta_Te_S> <epsilon_Te_S> <C_Te_S> <d_Te_S> <sR_Te_S> <reff_Te_S> <C6_Te_S> <S_Te_S> <rcut_normal_Te_S> <rcut_global_Te_S>
+<z0_Te_Se> <alpha_Te_Se> <delta_Te_Se> <epsilon_Te_Se> <C_Te_Se> <d_Te_Se> <sR_Te_Se> <reff_Te_Se> <C6_Te_Se> <S_Te_Se> <rcut_normal_Te_Se> <rcut_global_Te_Se>
+<z0_Te_Te> <alpha_Te_Te> <delta_Te_Te> <epsilon_Te_Te> <C_Te_Te> <d_Te_Te> <sR_Te_Te> <reff_Te_Te> <C6_Te_Te> <S_Te_Te> <rcut_normal_Te_Te> <rcut_global_Te_Te>

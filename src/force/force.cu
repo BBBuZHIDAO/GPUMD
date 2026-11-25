@@ -30,6 +30,7 @@ The driver class calculating force and related quantities.
 #include "wpe_adapter.cuh"
 #endif
 #include "ilp_nep.cuh"
+#include "iwp_nep_m6x6.cuh"
 #include "ilp_tmd_sw.cuh"
 #include "ilp_tersoff.cuh"
 #include "lj.cuh"
@@ -168,6 +169,16 @@ std::unique_ptr<Potential> Force::create_potential(
     }
     FILE* fid_nep_map = my_fopen(tokens[2].c_str(), "r");
     potential.reset(new ILP_NEP(fid_potential, fid_nep_map, num_types, number_of_atoms));
+    fclose(fid_nep_map);
+  } else if (strcmp(potential_name, "nep_iwp") == 0 ||
+             strcmp(potential_name, "nep_iwp_m6x6") == 0 ||
+             strcmp(potential_name, "nep_iwp_zbl") == 0) {
+    if (num_param != 3) {
+      PRINT_INPUT_ERROR("potential should contain an IWP potential file and a NEP map file.\n");
+    }
+    FILE* fid_nep_map = my_fopen(tokens[2].c_str(), "r");
+    potential.reset(new IWP_NEP_M6X6(fid_potential, fid_nep_map, num_types, number_of_atoms,
+      strcmp(potential_name, "nep_iwp_zbl") == 0));
     fclose(fid_nep_map);
   } else if (strcmp(potential_name, "tersoff_ilp") == 0) {
     if (num_param != 3) {

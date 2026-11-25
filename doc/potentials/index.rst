@@ -17,6 +17,7 @@ Interatomic potentials
    eam
    fcp
    nep
+   nep_iwp
    nep_ilp
    sw_ilp
    tersoff_ilp
